@@ -66,11 +66,30 @@ int select_goat(list<Goat> trip){
 }
 
 void delete_goat(list<Goat> &trip){
+    int idx = select_goat(trip);                 // Get an index start from 1
+    if (idx == -1) return;                       // -1 means cancel/invalid
 
+    auto it = trip.begin();                      // iterator to the first goat
+    advance(it, idx - 1);                        // move iterator to the selected position
+
+    // Show which goat is being removed
+    cout << "Deleted: " << it->get_name() << " (" << it->get_age()
+         << ", " << it->get_color() << ")\n";
+
+    trip.erase(it);                              // Erase the selected goat from the list
 }
 
-void add_goat(list<Goat> &trip, string [], string []){
+void add_goat(list<Goat> &trip, string names[], string colors[]){
+    int ni = rand() % g_names_cnt;               // random index into names pool
+    int ci = rand() % g_colors_cnt;              // random index into colors pool
+    int age = rand() % (MAX_AGE + 1);            // random age in [0, MAX_AGE]
 
+    Goat g(names[ni], age, colors[ci]);          
+    trip.push_back(g);                           // append to the end of the list
+
+    // confirm to the user what was added
+    cout << "Added: " << g.get_name() << " (" << g.get_age()
+         << ", " << g.get_color() << ")\n";
 }
 
 void display_trip(list<Goat> trip){
