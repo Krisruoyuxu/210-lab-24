@@ -4,6 +4,7 @@
 #include <list>
 #include <string>        
 #include <limits>    
+#include <ctime>
 #include "Goat.h"
 using namespace std;
 
@@ -35,7 +36,15 @@ int main() {
 
     list<Goat> trip;                                          
 
-    
+    again = true;
+    while (again) {
+        switch (main_menu()) {
+            case 1: add_goat(trip, names, colors); break;
+            case 2: delete_goat(trip); break;
+            case 3: display_trip(trip); break;
+            case 4: cout << "Bye!" << endl; again = false; break;
+        }
+    }
 
 
                                           
@@ -93,7 +102,16 @@ void add_goat(list<Goat> &trip, string names[], string colors[]){
 }
 
 void display_trip(list<Goat> trip){
-
+    if (trip.empty()) {                          // Handle empty list
+        cout << "(no goats yet)\n";
+        return;
+    }
+    int i = 1;                                   // 1 based numbering for display
+    for (const auto& g : trip) {                 // Iterate in order
+        cout << "[" << i++ << "] "
+             << g.get_name() << " (" << g.get_age()
+             << ", " << g.get_color() << ")\n";
+    }
 }
 
 int main_menu() {
