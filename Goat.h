@@ -12,7 +12,15 @@ private:
     string color;
 public: 
     Goat()                          { name = ""; age = 0; color = ""; }
-    // write three more constructors
+    //  three  constructors
+    Goat(const std::string& name)
+    : name(name), age(0), color("Gray") {}
+
+    Goat(const std::string& name, int age)
+    : name(name), age(age), color("Gray") {}
+
+    Goat(const std::string& name, int age, const std::string& color)
+    : name(name), age(age), color(color) {}
 
     // setters and getters
     void set_name(string n)         { name = n; };
