@@ -26,14 +26,24 @@ int main() {
     ifstream fin("names.txt");
     string names[SZ_NAMES];
     int i = 0;
-    while (fin >> names[i++]);
+    while (fin && i < SZ_NAMES && (fin >> names[i])) ++i;   // bounded read into names[]; stops on EOF/error and prevents overflow
     fin.close();
+    g_names_cnt = i; 
+
     ifstream fin1("colors.txt");
     string colors[SZ_COLORS];
-    i = 0;
-    while (fin1 >> colors[i++]);
-    fin1.close();
 
+    i = 0;
+    while (fin1 && i < SZ_COLORS && (fin1 >> colors[i])) ++i;;   // bounded read into color[]; stops on EOF/error and prevents overflow
+    fin1.close();
+    g_colors_cnt = i;  
+
+    if (g_names_cnt == 0 || g_colors_cnt == 0) {     // Ensure the name/color pools are non-empty before random selection;
+        cout << "Failed to load names.txt or colors.txt" << endl;
+        return 1;
+    }
+
+    // Trip container and main menu loop
     list<Goat> trip;                                          
 
     again = true;
@@ -45,9 +55,7 @@ int main() {
             case 4: cout << "Bye!" << endl; again = false; break;
         }
     }
-
-
-                                          
+                                    
     return 0;
 }
 
