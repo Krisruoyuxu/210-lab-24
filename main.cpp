@@ -46,8 +46,7 @@ int main() {
     }
 
     set<Goat> trip;                                             
-    trip.insert(Goat("A",5,"Red"));
-    trip.insert(Goat("A",5,"Red"));
+    
     
     again = true;
     while (again) {
@@ -62,7 +61,7 @@ int main() {
     return 0;
 }
 
-int select_goat(list<Goat> trip){
+int select_goat(set<Goat> trip){
     if (trip.empty()) { cout << "Trip is empty." << endl; return -1; }
     cout << "Select goat to delete:" << endl;
     int idx = 1;
@@ -85,7 +84,7 @@ int select_goat(list<Goat> trip){
     return choice;
 }
 
-void delete_goat(list<Goat> &trip){
+void delete_goat(set<Goat> &trip){
     int idx = select_goat(trip);                 // Get an index start from 1
     if (idx == -1) return;                       // -1 means cancel/invalid
 
@@ -99,20 +98,24 @@ void delete_goat(list<Goat> &trip){
     trip.erase(it);                              // Erase the selected goat from the list
 }
 
-void add_goat(list<Goat> &trip, string names[], string colors[]){
+void add_goat(set<Goat> &trip, string names[], string colors[]){
     int ni = rand() % g_names_cnt;               // random index into names pool
     int ci = rand() % g_colors_cnt;              // random index into colors pool
     int age = rand() % (MAX_AGE + 1);            // random age in [0, MAX_AGE]
 
     Goat g(names[ni], age, colors[ci]);          
-    trip.push_back(g);                           // append to the end of the list
-
-    // confirm to the user what was added
-    cout << "Added: " << g.get_name() << " (" << g.get_age()
-         << ", " << g.get_color() << ")\n";
+    auto res = trip.insert(g);   // try to insert into the set 
+             
+    if (res.second) {  //  it was added
+        cout << "Added: " << res.first->get_name() << " (" << res.first->get_age()
+             << ", " << res.first->get_color() << ")\n";
+    } else {  // this means it was a duplicate
+        cout << "Duplicate ignored: " << res.first->get_name() << " (" << res.first->get_age()
+             << ", " << res.first->get_color() << ")\n";           
+    }
 }
 
-void display_trip(list<Goat> trip){
+void display_trip(set<Goat> trip){
     if (trip.empty()) {                          // Handle empty list
         cout << "(no goats yet)\n";
         return;
