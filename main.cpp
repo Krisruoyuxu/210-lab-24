@@ -46,7 +46,9 @@ int main() {
     }
 
     set<Goat> trip;                                             
-
+    trip.insert(Goat("A",5,"Red"));
+    trip.insert(Goat("A",5,"Red"));
+    
     again = true;
     while (again) {
         switch (main_menu()) {
