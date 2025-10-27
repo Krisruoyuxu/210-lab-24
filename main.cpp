@@ -18,6 +18,7 @@ int select_goat(set<Goat> trip);
 void delete_goat(set<Goat> &trip);                   
 void add_goat(set<Goat> &trip, string [], string []); 
 void display_trip(set<Goat> trip);     
+int main_menu();
 
 int main() {
     srand(time(0));
