@@ -5,6 +5,7 @@
 #include <string>        
 #include <limits>    
 #include <ctime>
+#include <set>   
 #include "Goat.h"
 using namespace std;
 
@@ -12,11 +13,11 @@ const int SZ_NAMES = 200, SZ_COLORS = 25, MAX_AGE = 20;
 int g_names_cnt = 0;  // Number of valid names read
 int g_colors_cnt = 0; // Number of valid colors read
 
-int select_goat(list<Goat> trip);
-void delete_goat(list<Goat> &trip);
-void add_goat(list<Goat> &trip, string [], string []);
-void display_trip(list<Goat> trip);
-int main_menu();
+//  replace list<Goat> with set<Goat>
+int select_goat(set<Goat> trip);                    
+void delete_goat(set<Goat> &trip);                   
+void add_goat(set<Goat> &trip, string [], string []); 
+void display_trip(set<Goat> trip);     
 
 int main() {
     srand(time(0));
@@ -43,8 +44,7 @@ int main() {
         return 1;
     }
 
-    // Trip container and main menu loop
-    list<Goat> trip;                                          
+    set<Goat> trip;                                             
 
     again = true;
     while (again) {
